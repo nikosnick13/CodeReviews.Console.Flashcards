@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Flashcards.nikosnick13.DTOs;
 
-public class BasicStackDTO
+internal class StudySessionDTO
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
+    public int Score { get; set; }
+    public DateTime Date { get; set; }
 }

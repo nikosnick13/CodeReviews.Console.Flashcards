@@ -3,7 +3,7 @@ using Flashcards.nikosnick13.Controllers;
 using Spectre.Console;
 using static Flashcards.nikosnick13.Enums.Enums;
 using Flashcards.nikosnick13.DTOs;
-
+using Flashcards.nikosnick13;
 namespace Flashcards.nikosnick13.UI;
 
 internal class FlashcardMenu
@@ -91,7 +91,7 @@ internal class FlashcardMenu
 
         };
 
-        _flashcardController.InsertFlashcart(newFlashcard);
+        _flashcardController.InsertFlashcard(newFlashcard);
 
     }
 
@@ -102,14 +102,14 @@ internal class FlashcardMenu
         string userInputQuestion = AnsiConsole.Prompt(new TextPrompt<string>("\nNew Question:"));
 
         if (userInputQuestion == "0") ShowFlashcartMenu();
-        while (!Validation.isValidString(userInputQuestion))
+
+        while (!Validation.IsValidString(userInputQuestion))
         {
             AnsiConsole.MarkupLine("[red]Invalid input. Try again.[/]");
             userInputQuestion = AnsiConsole.Ask<string>(msg);
         }
 
         return userInputQuestion;
-
     }
 
     private string GetTheAnswer(string msg)
@@ -117,7 +117,7 @@ internal class FlashcardMenu
         string userInputAnswer = AnsiConsole.Prompt(new TextPrompt<string>("\nNew Answer:"));
 
         if (userInputAnswer == "0") ShowFlashcartMenu();
-        while (!Validation.isValidString(userInputAnswer))
+        while (!Validation.IsValidString(userInputAnswer))
         {
             AnsiConsole.MarkupLine("\n[red]Invalid input. Try again.[/]");
             userInputAnswer = AnsiConsole.Ask<string>(msg);
@@ -126,7 +126,6 @@ internal class FlashcardMenu
         return userInputAnswer;
     }
 
-    //NOT WORKING TODO: FIX 
     private void ProcessViewOneFlashcards()
     {
 
@@ -144,20 +143,17 @@ internal class FlashcardMenu
 
         while (!Validation.isValidInt(userInput))
         {
-            Console.WriteLine("Invalid input. Please enter a valid integer ID.");
-            userInput = Console.ReadLine();
+            WriteLine("Invalid input. Please enter a valid integer ID.");
+            userInput = ReadLine();
         }
 
         int id = Int32.Parse(userInput);
-
 
         var flashcardDTO = _flashcardController.ViewFlashcardById(id);
 
         TableVisualisation.DisplayOneFlashcard(new List<DetailFlashcardDTO> { flashcardDTO });
     
     }
-
-  
 
     private void ProcessDelete()
     {

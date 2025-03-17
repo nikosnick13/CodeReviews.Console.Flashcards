@@ -6,11 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using Spectre.Console;
 using static Flashcards.nikosnick13.Enums.Enums;
+using Flashcards.nikosnick13.Controllers;
+
 
 namespace Flashcards.nikosnick13.UI;
 
 internal class StudyMenu
 {
+
+
+    private readonly StudyController _studyController;
+    private readonly StackController _stackController;
+
+    public StudyMenu()
+    {
+        _studyController = new StudyController();
+        _stackController = new StackController();
+
+    }
 
     public void ShowStudyMenu() 
     {
@@ -19,8 +32,6 @@ internal class StudyMenu
 
         while (isStudyRunning)
         {
-            Clear();
-
             Clear();
             var studyMenu = AnsiConsole.Prompt(
                 new SelectionPrompt<StudyMenuOptions>()
@@ -31,31 +42,33 @@ internal class StudyMenu
                     StudyMenuOptions.ReturnToMainMenu
                     ));
 
-
             switch (studyMenu) 
             {
                 case StudyMenuOptions.StartStudySession:
-                    
-                    AnsiConsole.MarkupLine("[yellow]Study mode not implemented yet![/]");
-                    ReadKey();
+                    StartStudySession();            
                     break;
                 case StudyMenuOptions.ViewStudySessions:
-                    
-                    AnsiConsole.MarkupLine("[yellow]Study mode not implemented yet![/]");
-                    ReadKey();
+                    _studyController.ViewStudySessions();
                     break;
                 case StudyMenuOptions.ReturnToMainMenu:
                     isStudyRunning = false;
                     break;
             }
-
-
-           
-
-
         }
+    }
 
-        
+    private void StartStudySession() {
+
+
+        Clear();
+        AnsiConsole.MarkupLine("[green]Starting a new study session...[/]\n");
+        ReadKey();
+
+        _stackController.ViewAllStacks();
+        int stackId = AnsiConsole.Ask<int>("Enter the [blue] Stack Id [/] you want to stady:");
+
+         _studyController.StartStudySession(stackId);
+       
 
     }
 

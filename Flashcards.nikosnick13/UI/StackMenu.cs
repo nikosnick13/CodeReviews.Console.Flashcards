@@ -202,7 +202,7 @@ internal class StackMenu
 
         if (userInput == "0") ShowStackMenu();
 
-        while (!Validation.isValidString(userInput))
+        while (!Validation.IsValidString(userInput))
         {
             AnsiConsole.MarkupLine("[red]Invalid input. Try again.[/]");
             userInput = AnsiConsole.Ask<string>(msg);

@@ -22,7 +22,7 @@ internal class FlashcardController
     private string? connectionString = ConfigurationManager.AppSettings.Get("ConnectionString");
 
 
-    public void InsertFlashcart(BasicFlashcardDTO flashcards)
+    public void InsertFlashcard(BasicFlashcardDTO flashcards)
     {
         try
         {
@@ -156,14 +156,13 @@ internal class FlashcardController
             
     }
 
-    //TODO:
     public DetailFlashcardDTO ViewFlashcardById(int id) {
 
         try {
             using var conn = new SqlConnection(connectionString);
             conn.Open();
 
-            string query = "SELECT Id, Question, Answer, Stack_Id FROM Flashcards WHERE Id = @Id";
+            string query = "SELECT Id, Question, Answer, Stack_Id AS StackId FROM Flashcards WHERE Id = @Id";
 
             var result = conn.QueryFirstOrDefault<DetailFlashcardDTO>(query, new { Id = id });
 

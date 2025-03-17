@@ -15,5 +15,5 @@ public class DetailStackDTO
 
     public ICollection<Flashcard>? Flashcard { get; set; }
 
-    public ICollection<StudySession>? StudySession { get; set; }
+    public ICollection<StudySession> StudySession { get; set; }
 }
